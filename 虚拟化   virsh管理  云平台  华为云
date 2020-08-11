@@ -1,0 +1,1089 @@
+虚拟化   virsh管理  云平台  华为云  
+
+
+NSD CLOUD DAY01
+
+    案例1：virsh基本管理操作
+    案例2：qemu-img基本操作管理
+    案例3：注册华为云用户
+    案例4：ECS选购及基本操作
+    案例5：云服务器Web建站
+
+1 案例1：virsh基本管理操作
+1.1 问题
+
+本案例要求熟悉virsh的基本操作，可以熟练运用：
+
+    列出当前正在运行的虚拟机
+    查看虚拟机的信息
+    管理虚拟机
+    设置虚拟机开机自动运行
+
+1.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：virsh基本操作
+
+1）列出当前正在运行的虚拟机
+
+     [root@room9pc01 ~]# virsh list 
+     Id    Name                           State
+    ----------------------------------------------------
+     1     node1                          running
+
+步骤二：查看虚拟机的信息
+
+    [root@room9pc01 ~]# virsh  dominfo   nova
+
+步骤三：管理虚拟机
+
+1）启动虚拟机
+
+    [root@room9pc01 ~]# virsh start node1
+
+2）重启虚拟机
+
+    [root@room9pc01 ~]# virsh reboot node1
+
+3）强制关闭虚拟机
+
+    [root@room9pc01 ~]# virsh destroy node1
+
+4）设置虚拟机开机自动运行
+
+    [root@room9pc01 ~]# virsh autostart node1
+
+5）查看虚拟机网卡信息
+
+    [root@room9pc01 ~]# virsh domiflist  node1
+    接口     类型     源        型号      MAC
+    -------------------------------------------------------
+    vnet0      bridge     vbr        virtio      52:54:00:5f:8b:11
+    vnet1      bridge     private1   virtio      52:54:00:19:a4:f3
+
+6）查看虚拟机硬盘信息
+
+    [root@room9pc01 ~]# virsh domblklist  node1
+    目标     源
+    ------------------------------------------------
+    vda        /var/lib/libvirt/images/node1.img
+    vdb        /var/lib/libvirt/images/disk.img
+
+2 案例2：qemu-img基本操作管理
+2.1 问题
+
+本案例要求：
+
+    创建一个新的镜像盘文件
+    使用后端模板文件创建一个新的镜像盘文件
+    查看镜像盘文件的信息
+
+2.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：创建一个新的镜像盘文件
+
+qemu-img命令格式：qemu-img 命令 参数 块文件名称 大小
+
+    [root@room9pc01 ~]# qemu-img create   -f qcow2 disk.img 50G    //qcow2为创建的格式
+    Formatting 'disk.img', fmt=qcow2 size=53687091200 encryption=off cluster_size=65536 lazy_refcounts=off
+
+2）使用后端模板文件创建一个新的镜像盘文件
+
+备注：-b使用后端模板文件
+
+    [root@room9pc01 ~]# qemu-img create -b disk.img -f qcow2 disk1.img
+    Formatting 'disk1.img', fmt=qcow2 size=53687091200 backing_file='disk.img' encryption=off cluster_size=65536 lazy_refcounts=off
+
+3）使用后端模板文件创建一个16G的镜像盘文件
+
+     [root@room9pc01 ~]# qemu-img create -b disk.img -f qcow2 disk2.img  16G
+    Formatting 'disk1.img', fmt=qcow2 size=53687091200 backing_file='disk.img' encryption=off cluster_size=65536 lazy_refcounts=off
+
+步骤二：查看镜像文件的信息
+
+    [root@room9pc01 ~]# qemu-img  info disk1.img 
+    image: disk.img
+    file format: qcow2
+    virtual size: 50G (53687091200 bytes)
+    disk size: 196K
+    cluster_size: 65536
+    Format specific information:
+        compat: 1.1
+        lazy refcounts: false | help_topic   |
+    | innodb_index_stats        |
+    | innodb_table_stats        |
+    | ndb_binlog_index          |
+    | plugin                     |
+    | proc                       |
+    | procs_priv                 |
+    | proxies_priv               |
+    | server_cost                |
+    | servers                    |
+    | slave_master_info         |
+
+3 案例3：注册华为云用户
+3.1 问题
+
+本案例要求：
+
+    访问官网 https://huaweicloud.com/
+    注册华为云用户（需手机号验证）
+    登录并完成实名认证
+    为账号充值不少于100元（不用时可提现）
+
+3.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：注册华为云
+NSD CLOUD DAY01
+
+    案例1：virsh基本管理操作
+    案例2：qemu-img基本操作管理
+    案例3：注册华为云用户
+    案例4：ECS选购及基本操作
+    案例5：云服务器Web建站
+
+1 案例1：virsh基本管理操作
+1.1 问题
+
+本案例要求熟悉virsh的基本操作，可以熟练运用：
+
+    列出当前正在运行的虚拟机
+    查看虚拟机的信息
+    管理虚拟机
+    设置虚拟机开机自动运行
+
+1.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：virsh基本操作
+
+1）列出当前正在运行的虚拟机
+
+     [root@room9pc01 ~]# virsh list 
+     Id    Name                           State
+    ----------------------------------------------------
+     1     node1                          running
+
+步骤二：查看虚拟机的信息
+
+    [root@room9pc01 ~]# virsh  dominfo   nova
+
+步骤三：管理虚拟机
+
+1）启动虚拟机
+
+    [root@room9pc01 ~]# virsh start node1
+
+2）重启虚拟机
+
+    [root@room9pc01 ~]# virsh reboot node1
+
+3）强制关闭虚拟机
+
+    [root@room9pc01 ~]# virsh destroy node1
+
+4）设置虚拟机开机自动运行
+
+    [root@room9pc01 ~]# virsh autostart node1
+
+5）查看虚拟机网卡信息
+
+    [root@room9pc01 ~]# virsh domiflist  node1
+    接口     类型     源        型号      MAC
+    -------------------------------------------------------
+    vnet0      bridge     vbr        virtio      52:54:00:5f:8b:11
+    vnet1      bridge     private1   virtio      52:54:00:19:a4:f3
+
+6）查看虚拟机硬盘信息
+
+    [root@room9pc01 ~]# virsh domblklist  node1
+    目标     源
+    ------------------------------------------------
+    vda        /var/lib/libvirt/images/node1.img
+    vdb        /var/lib/libvirt/images/disk.img
+
+2 案例2：qemu-img基本操作管理
+2.1 问题
+
+本案例要求：
+
+    创建一个新的镜像盘文件
+    使用后端模板文件创建一个新的镜像盘文件
+    查看镜像盘文件的信息
+
+2.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：创建一个新的镜像盘文件
+
+qemu-img命令格式：qemu-img 命令 参数 块文件名称 大小
+
+    [root@room9pc01 ~]# qemu-img create   -f qcow2 disk.img 50G    //qcow2为创建的格式
+    Formatting 'disk.img', fmt=qcow2 size=53687091200 encryption=off cluster_size=65536 lazy_refcounts=off
+
+2）使用后端模板文件创建一个新的镜像盘文件
+
+备注：-b使用后端模板文件
+
+    [root@room9pc01 ~]# qemu-img create -b disk.img -f qcow2 disk1.img
+    Formatting 'disk1.img', fmt=qcow2 size=53687091200 backing_file='disk.img' encryption=off cluster_size=65536 lazy_refcounts=off
+
+3）使用后端模板文件创建一个16G的镜像盘文件
+
+     [root@room9pc01 ~]# qemu-img create -b disk.img -f qcow2 disk2.img  16G
+    Formatting 'disk1.img', fmt=qcow2 size=53687091200 backing_file='disk.img' encryption=off cluster_size=65536 lazy_refcounts=off
+
+步骤二：查看镜像文件的信息
+
+    [root@room9pc01 ~]# qemu-img  info disk1.img 
+    image: disk.img
+    file format: qcow2
+    virtual size: 50G (53687091200 bytes)
+    disk size: 196K
+    cluster_size: 65536
+    Format specific information:
+        compat: 1.1
+        lazy refcounts: false | help_topic   |
+    | innodb_index_stats        |
+    | innodb_table_stats        |
+    | ndb_binlog_index          |
+    | plugin                     |
+    | proc                       |
+    | procs_priv                 |
+    | proxies_priv               |
+    | server_cost                |
+    | servers                    |
+    | slave_master_info         |
+
+3 案例3：注册华为云用户
+3.1 问题
+
+本案例要求：
+
+    访问官网 https://huaweicloud.com/
+    注册华为云用户（需手机号验证）
+    登录并完成实名认证
+    为账号充值不少于100元（不用时可提现）
+
+3.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：注册华为云
+
+1）访问官网，如图-1所示：
+
+图-1
+
+2）注册用户，如图-2所示：
+
+图-2
+
+2）登陆并完成实名认证，如图-3所示：
+
+图-3
+
+s
+4 案例4：ECS选购及基本操作
+4.1 问题
+
+本案例要求：
+
+    选购一台ECS云服务器
+    按需付费、通用计算型1vCPUs/1GB、硬盘40GB
+    独享带宽按流量、镜像选CentOS 7.4 x64
+    用户 root，密码 tedu.cn1234
+    通过“远程登录”进入此ECS云服务器的系统
+NSD CLOUD DAY01
+
+    案例1：virsh基本管理操作
+    案例2：qemu-img基本操作管理
+    案例3：注册华为云用户
+    案例4：ECS选购及基本操作
+    案例5：云服务器Web建站
+
+1 案例1：virsh基本管理操作
+1.1 问题
+
+本案例要求熟悉virsh的基本操作，可以熟练运用：
+
+    列出当前正在运行的虚拟机
+    查看虚拟机的信息
+    管理虚拟机
+    设置虚拟机开机自动运行
+
+1.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：virsh基本操作
+
+1）列出当前正在运行的虚拟机
+
+     [root@room9pc01 ~]# virsh list 
+     Id    Name                           State
+    ----------------------------------------------------
+     1     node1                          running
+
+步骤二：查看虚拟机的信息
+
+    [root@room9pc01 ~]# virsh  dominfo   nova
+
+步骤三：管理虚拟机
+
+1）启动虚拟机
+
+    [root@room9pc01 ~]# virsh start node1
+
+2）重启虚拟机NSD CLOUD DAY01
+
+    案例1：virsh基本管理操作
+    案例2：qemu-img基本操作管理
+    案例3：注册华为云用户
+    案例4：ECS选购及基本操作
+    案例5：云服务器Web建站
+
+1 案例1：virsh基本管理操作
+1.1 问题
+
+本案例要求熟悉virsh的基本操作，可以熟练运用：
+
+    列出当前正在运行的虚拟机
+    查看虚拟机的信息
+    管理虚拟机
+    设置虚拟机开机自动运行
+
+1.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：virsh基本操作
+
+1）列出当前正在运行的虚拟机
+
+     [root@room9pc01 ~]# virsh list 
+     Id    Name                           State
+    ----------------------------------------------------
+     1     node1                          running
+
+步骤二：查看虚拟机的信息
+
+    [root@room9pc01 ~]# virsh  dominfo   nova
+
+步骤三：管理虚拟机
+
+1）启动虚拟机NSD CLOUD DAY01
+
+    案例1：virsh基本管理操作
+    案例2：qemu-img基本操作管理
+    案例3：注册华为云用户
+    案例4：ECS选购及基本操作
+    案例5：云服务器Web建站
+
+1 案例1：virsh基本管理操作
+1.1 问题
+
+本案例要求熟悉virsh的基本操作，可以熟练运用：
+
+    列出当前正在运行的虚拟机
+    查看虚拟机的信息
+    管理虚拟机
+    设置虚拟机开机自动运行
+
+1.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：virsh基本操作
+
+1）列出当前正在运行的虚拟机
+
+     [root@room9pc01 ~]# virsh list 
+     Id    Name                           State
+    ----------------------------------------------------
+     1     node1                          running
+
+步骤二：查看虚拟机的信息
+
+    [root@room9pc01 ~]# virsh  dominfo   nova
+
+步骤三：管理虚拟机
+
+1）启动虚拟机
+
+    [root@room9pc01 ~]# virsh start node1
+
+2）重启虚拟机
+
+    [root@room9pc01 ~]# virsh reboot node1
+
+3）强制关闭虚拟机
+
+    [root@room9pc01 ~]# virsh destroy node1
+
+4）设置虚拟机开机自动运行
+
+    [root@room9pc01 ~]# virsh autostart node1
+
+5）查看虚拟机网卡信息
+
+    [root@room9pc01 ~]# virsh domiflist  node1
+    接口     类型     源        型号      MAC
+    -------------------------------------------------------
+    vnet0      bridge     vbr        virtio      52:54:00:5f:8b:11
+    vnet1      bridge     private1   virtio      52:54:00:19:a4:f3
+
+6）查看虚拟机硬盘信息
+
+    [root@room9pc01 ~]# virsh domblklist  node1
+    目标     源
+    ------------------------------------------------
+    vda        /var/lib/libvirt/images/node1.img
+    vdb        /var/lib/libvirt/images/disk.img
+
+2 案例2：qemu-img基本操作管理
+2.1 问题
+
+本案例要求：
+
+    创建一个新的镜像盘文件
+    使用后端模板文件创建一个新的镜像盘文件
+    查看镜像盘文件的信息
+
+2.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：创建一个新的镜像盘文件
+
+qemu-img命令格式：qemu-img 命令 参数 块文件名称 大小
+
+    [root@room9pc01 ~]# qemu-img create   -f qcow2 disk.img 50G    //qcow2为创建的格式
+    Formatting 'disk.img', fmt=qcow2 size=53687091200 encryption=off cluster_size=65536 lazy_refcounts=off
+
+2）使用后端模板文件创建一个新的镜像盘文件
+
+备注：-b使用后端模板文件
+
+    [root@room9pc01 ~]# qemu-img create -b disk.img -f qcow2 disk1.img
+    Formatting 'disk1.img', fmt=qcow2 size=53687091200 backing_file='disk.img' encryption=off cluster_size=65536 lazy_refcounts=off
+
+3）使用后端模板文件创建一个16G的镜像盘文件
+
+     [root@room9pc01 ~]# qemu-img create -b disk.img -f qcow2 disk2.img  16G
+    Formatting 'disk1.img', fmt=qcow2 size=53687091200 backing_file='disk.img' encryption=off cluster_size=65536 lazy_refcounts=off
+
+步骤二：查看镜像文件的信息
+
+    [root@room9pc01 ~]# qemu-img  info disk1.img 
+    image: disk.img
+    file format: qcow2
+    virtual size: 50G (53687091200 bytes)
+    disk size: 196K
+    cluster_size: 65536
+    Format specific information:
+        compat: 1.1
+        lazy refcounts: false | help_topic   |
+    | innodb_index_stats        |
+    | innodb_table_stats        |
+    | ndb_binlog_index          |
+    | plugin                     |
+    | proc                       |
+    | procs_priv                 |
+    | proxies_priv               |
+    | server_cost                |
+    | servers                    |
+    | slave_master_info         |
+
+3 案例3：注册华为云用户
+3.1 问题
+
+本案例要求：
+
+    访问官网 https://huaweicloud.com/
+    注册华为云用户（需手机号验证）
+    登录并完成实名认证
+    为账号充值不少于100元（不用时可提现）
+
+3.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：注册华为云
+
+1）访问官网，如图-1所示：
+
+图-1
+
+2）注册用户，如图-2所示：
+
+图-2
+
+2）登陆并完成实名认证，如图-3所示：
+
+图-3
+
+s
+4 案例4：ECS选购及基本操作
+4.1 问题
+
+本案例要求：
+
+    选购一台ECS云服务器
+    按需付费、通用计算型1vCPUs/1GB、硬盘40GB
+    独享带宽按流量、镜像选CentOS 7.4 x64
+    用户 root，密码 tedu.cn1234
+    通过“远程登录”进入此ECS云服务器的系统
+
+4.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：选购云服务器
+
+1）选购一台云服务器，如图-4所示：
+
+图-4
+
+2）结果如图-5所示
+
+图-5
+
+3）ECS基本操作，如图-6所示：
+
+图-6
+5 案例5：云服务器Web建站
+5.1 问题
+
+本案例要求：
+
+    在ECS云服务器上启用 httpd 服务
+    测试网页
+
+5.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：云服务器Web建站
+
+1）在ECS云服务器上启用 httpd 服务
+
+    [root@svr1 ~]# yum  -y  install  httpd     //安装httpd 
+    .. ..
+    [root@svr1 ~]# systemctl  restart  httpd      //启动服务
+    [root@svr1 ~]# systemctl  enable  httpd      //设开机自运行
+    [root@svr1 ~]# systemctl  status  httpd     //检查服务状态
+    .. ..  Active: active (running)  .. ..         //正在运行中
+
+2）ECS实例需开放Web服务端口，如图-7所示：
+
+备注：22端口：Linux服务器远程控制
+
+80端口：普通网站服务
+
+443端口：加密网站服务
+
+图-7
+
+2）测试页面，如图-8所示：
+
+图-8
+
+
+
+    [root@room9pc01 ~]# virsh start node1
+
+2）重启虚拟机
+
+    [root@room9pc01 ~]# virsh reboot node1
+
+3）强制关闭虚拟机
+
+    [root@room9pc01 ~]# virsh destroy node1
+
+4）设置虚拟机开机自动运行
+
+    [root@room9pc01 ~]# virsh autostart node1
+
+5）查看虚拟机网卡信息
+
+    [root@room9pc01 ~]# virsh domiflist  node1
+    接口     类型     源        型号      MAC
+    -------------------------------------------------------
+    vnet0      bridge     vbr        virtio      52:54:00:5f:8b:11
+    vnet1      bridge     private1   virtio      52:54:00:19:a4:f3
+
+6）查看虚拟机硬盘信息
+
+    [root@room9pc01 ~]# virsh domblklist  node1
+    目标     源
+    ------------------------------------------------
+    vda        /var/lib/libvirt/images/node1.img
+    vdb        /var/lib/libvirt/images/disk.img
+
+2 案例2：qemu-img基本操作管理
+2.1 问题
+
+本案例要求：
+
+    创建一个新的镜像盘文件
+    使用后端模板文件创建一个新的镜像盘文件
+    查看镜像盘文件的信息
+
+2.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：创建一个新的镜像盘文件
+
+qemu-img命令格式：qemu-img 命令 参数 块文件名称 大小
+
+    [root@room9pc01 ~]# qemu-img create   -f qcow2 disk.img 50G    //qcow2为创建的格式
+    Formatting 'disk.img', fmt=qcow2 size=53687091200 encryption=off cluster_size=65536 lazy_refcounts=off
+
+2）使用后端模板文件创建一个新的镜像盘文件
+
+备注：-b使用后端模板文件
+
+    [root@room9pc01 ~]# qemu-img create -b disk.img -f qcow2 disk1.img
+    Formatting 'disk1.img', fmt=qcow2 size=53687091200 backing_file='disk.img' encryption=off cluster_size=65536 lazy_refcounts=off
+
+3）使用后端模板文件创建一个16G的镜像盘文件
+
+     [root@room9pc01 ~]# qemu-img create -b disk.img -f qcow2 disk2.img  16G
+    Formatting 'disk1.img', fmt=qcow2 size=53687091200 backing_file='disk.img' encryption=off cluster_size=65536 lazy_refcounts=off
+
+步骤二：查看镜像文件的信息
+
+    [root@room9pc01 ~]# qemu-img  info disk1.img 
+    image: disk.img
+    file format: qcow2
+    virtual size: 50G (53687091200 bytes)
+    disk size: 196K
+    cluster_size: 65536
+    Format specific information:
+        compat: 1.1
+        lazy refcounts: false | help_topic   |
+    | innodb_index_stats        |
+    | innodb_table_stats        |
+    | ndb_binlog_index          |
+    | plugin                     |
+    | proc                       |
+    | procs_priv                 |
+    | proxies_priv               |
+    | server_cost                |
+    | servers                    |
+    | slave_master_info         |
+
+3 案例3：注册华为云用户
+3.1 问题
+
+本案例要求：
+
+    访问官网 https://huaweicloud.com/
+    注册华为云用户（需手机号验证）
+    登录并完成实名认证
+    为账号充值不少于100元（不用时可提现）
+
+3.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：注册华为云
+
+1）访问官网，如图-1所示：
+
+图-1
+
+2）注册用户，如图-2所示：
+
+图-2
+
+2）登陆并完成实名认证，如图-3所示：
+
+图-3
+
+s
+4 案例4：ECS选购及基本操作
+4.1 问题
+
+本案例要求：
+
+    选购一台ECS云服务器
+    按需付费、通用计算型1vCPUs/1GB、硬盘40GB
+    独享带宽按流量、镜像选CentOS 7.4 x64
+    用户 root，密码 tedu.cn1234
+    通过“远程登录”进入此ECS云服务器的系统
+
+4.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：选购云服务器
+
+1）选购一台云服务器，如图-4所示：
+
+图-4
+
+2）结果如图-5所示
+
+图-5
+
+3）ECS基本操作，如图-6所示：
+
+图-6
+5 案例5：云服务器Web建站
+5.1 问题
+
+本案例要求：
+
+    在ECS云服务器上启用 httpd 服务
+    测试网页
+
+5.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：云服务器Web建站
+
+1）在ECS云服务器上启用 httpd 服务
+
+    [root@svr1 ~]# yum  -y  install  httpd     //安装httpd 
+    .. ..
+    [root@svr1 ~]# systemctl  restart  httpd      //启动服务
+    [root@svr1 ~]# systemctl  enable  httpd      //设开机自运行
+    [root@svr1 ~]# systemctl  status  httpd     //检查服务状态
+    .. ..  Active: active (running)  .. ..         //正在运行中
+
+2）ECS实例需开放Web服务端口，如图-7所示：
+
+备注：22端口：Linux服务器远程控制
+
+80端口：普通网站服务
+
+443端口：加密网站服务
+
+图-7
+
+2）测试页面，如图-8所示：
+
+图-8
+
+
+
+    [root@room9pc01 ~]# virsh reboot node1
+
+3）强制关闭虚拟机
+
+    [root@room9pc01 ~]# virsh destroy node1
+
+4）设置虚拟机开机自动运行
+
+    [root@room9pc01 ~]# virsh autostart node1
+
+5）查看虚拟机网卡信息
+
+    [root@room9pc01 ~]# virsh domiflist  node1
+    接口     类型     源        型号      MAC
+    -------------------------------------------------------
+    vnet0      bridge     vbr        virtio      52:54:00:5f:8b:11
+    vnet1      bridge     private1   virtio      52:54:00:19:a4:f3
+
+6）查看虚拟机硬盘信息
+
+    [root@room9pc01 ~]# virsh domblklist  node1
+    目标     源
+    ------------------------------------------------
+    vda        /var/lib/libvirt/images/node1.img
+    vdb        /var/lib/libvirt/images/disk.img
+
+2 案例2：qemu-img基本操作管理
+2.1 问题
+
+本案例要求：
+
+    创建一个新的镜像盘文件
+    使用后端模板文件创建一个新的镜像盘文件
+    查看镜像盘文件的信息
+
+2.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：创建一个新的镜像盘文件
+
+qemu-img命令格式：qemu-img 命令 参数 块文件名称 大小
+
+    [root@room9pc01 ~]# qemu-img create   -f qcow2 disk.img 50G    //qcow2为创建的格式
+    Formatting 'disk.img', fmt=qcow2 size=53687091200 encryption=off cluster_size=65536 lazy_refcounts=off
+
+2）使用后端模板文件创建一个新的镜像盘文件
+
+备注：-b使用后端模板文件
+
+    [root@room9pc01 ~]# qemu-img create -b disk.img -f qcow2 disk1.img
+    Formatting 'disk1.img', fmt=qcow2 size=53687091200 backing_file='disk.img' encryption=off cluster_size=65536 lazy_refcounts=off
+
+3）使用后端模板文件创建一个16G的镜像盘文件
+
+     [root@room9pc01 ~]# qemu-img create -b disk.img -f qcow2 disk2.img  16G
+    Formatting 'disk1.img', fmt=qcow2 size=53687091200 backing_file='disk.img' encryption=off cluster_size=65536 lazy_refcounts=off
+
+步骤二：查看镜像文件的信息
+
+    [root@room9pc01 ~]# qemu-img  info disk1.img 
+    image: disk.img
+    file format: qcow2
+    virtual size: 50G (53687091200 bytes)
+    disk size: 196K
+    cluster_size: 65536
+    Format specific information:
+        compat: 1.1
+        lazy refcounts: false | help_topic   |
+    | innodb_index_stats        |
+    | innodb_table_stats        |
+    | ndb_binlog_index          |
+    | plugin                     |
+    | proc                       |
+    | procs_priv                 |
+    | proxies_priv               |
+    | server_cost                |
+    | servers                    |
+    | slave_master_info         |
+
+3 案例3：注册华为云用户
+3.1 问题
+
+本案例要求：
+
+    访问官网 https://huaweicloud.com/
+    注册华为云用户（需手机号验证）
+    登录并完成实名认证
+    为账号充值不少于100元（不用时可提现）
+
+3.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：注册华为云
+
+1）访问官网，如图-1所示：
+
+图-1
+
+2）注册用户，如图-2所示：
+
+图-2
+
+2）登陆并完成实名认证，如图-3所示：
+
+图-3
+
+s
+4 案例4：ECS选购及基本操作
+4.1 问题
+
+本案例要求：
+
+    选购一台ECS云服务器
+    按需付费、通用计算型1vCPUs/1GB、硬盘40GB
+    独享带宽按流量、镜像选CentOS 7.4 x64
+    用户 root，密码 tedu.cn1234
+    通过“远程登录”进入此ECS云服务器的系统
+
+4.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：选购云服务器
+
+1）选购一台云服务器，如图-4所示：
+
+图-4
+
+2）结果如图-5所示
+
+图-5
+
+3）ECS基本操作，如图-6所示：
+
+图-6
+5 案例5：云服务器Web建站
+5.1 问题
+
+本案例要求：
+
+    在ECS云服务器上启用 httpd 服务
+    测试网页
+
+5.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：云服务器Web建站
+
+1）在ECS云服务器上启用 httpd 服务
+
+    [root@svr1 ~]# yum  -y  install  httpd     //安装httpd 
+    .. ..
+    [root@svr1 ~]# systemctl  restart  httpd      //启动服务
+    [root@svr1 ~]# systemctl  enable  httpd      //设开机自运行
+    [root@svr1 ~]# systemctl  status  httpd     //检查服务状态
+    .. ..  Active: active (running)  .. ..         //正在运行中
+
+2）ECS实例需开放Web服务端口，如图-7所示：
+
+备注：22端口：Linux服务器远程控制
+
+80端口：普通网站服务
+
+443端口：加密网站服务
+
+图-7
+
+2）测试页面，如图-8所示：
+
+图-8
+
+
+4.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：选购云服务器
+
+1）选购一台云服务器，如图-4所示：
+
+图-4
+
+2）结果如图-5所示
+
+图-5
+
+3）ECS基本操作，如图-6所示：
+
+图-6
+5 案例5：云服务器Web建站
+5.1 问题
+
+本案例要求：
+
+    在ECS云服务器上启用 httpd 服务
+    测试网页
+
+5.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：云服务器Web建站
+
+1）在ECS云服务器上启用 httpd 服务
+
+    [root@svr1 ~]# yum  -y  install  httpd     //安装httpd 
+    .. ..
+    [root@svr1 ~]# systemctl  restart  httpd      //启动服务
+    [root@svr1 ~]# systemctl  enable  httpd      //设开机自运行
+    [root@svr1 ~]# systemctl  status  httpd     //检查服务状态
+    .. ..  Active: active (running)  .. ..         //正在运行中
+
+2）ECS实例需开放Web服务端口，如图-7所示：
+
+备注：22端口：Linux服务器远程控制
+
+80端口：普通网站服务
+
+443端口：加密网站服务
+
+图-7
+
+2）测试页面，如图-8所示：
+
+图-8
+
+
+1）访问官网，如图-1所示：
+
+图-1
+
+2）注册用户，如图-2所示：
+
+图-2
+
+2）登陆并完成实名认证，如图-3所示：
+
+图-3
+
+s
+4 案例4：ECS选购及基本操作
+4.1 问题
+
+本案例要求：
+
+    选购一台ECS云服务器
+    按需付费、通用计算型1vCPUs/1GB、硬盘40GB
+    独享带宽按流量、镜像选CentOS 7.4 x64
+    用户 root，密码 tedu.cn1234
+    通过“远程登录”进入此ECS云服务器的系统
+
+4.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：选购云服务器
+
+1）选购一台云服务器，如图-4所示：
+
+图-4
+
+2）结果如图-5所示
+
+图-5
+
+3）ECS基本操作，如图-6所示：
+
+图-6
+5 案例5：云服务器Web建站
+5.1 问题
+
+本案例要求：
+
+    在ECS云服务器上启用 httpd 服务
+    测试网页
+
+5.2 步骤
+
+实现此案例需要按照如下步骤进行。
+
+步骤一：云服务器Web建站
+
+1）在ECS云服务器上启用 httpd 服务
+
+    [root@svr1 ~]# yum  -y  install  httpd     //安装httpd 
+    .. ..
+    [root@svr1 ~]# systemctl  restart  httpd      //启动服务
+    [root@svr1 ~]# systemctl  enable  httpd      //设开机自运行
+    [root@svr1 ~]# systemctl  status  httpd     //检查服务状态
+    .. ..  Active: active (running)  .. ..         //正在运行中
+
+2）ECS实例需开放Web服务端口，如图-7所示：
+
+备注：22端口：Linux服务器远程控制
+
+80端口：普通网站服务
+
+443端口：加密网站服务
+
+图-7
+
+2）测试页面，如图-8所示：
+
+图-8
+
+

@@ -1,0 +1,373 @@
+作业
+01-------------------------------------------------------
+
+1 阐述什么是虚拟化
+
+参考答案
+
+虚拟化，是指通过虚拟化技术将一台计算机虚拟为多台逻辑计算机。在一台计算机上同时运行多个逻辑计算机，每个逻辑计算机可运行不同的操作系统，并且应用程序都可以在相互独立的空间内运行而互不影响，从而显著提高计算机的工作效率
+2 安装虚拟化服务器平台需要哪些软件，作用分别是什么
+
+参考答案
+
+需要安装的软件：
+
+qemu-kvm、libvirt-daemon、libvirt-client、libvirt-daemon-driver-qemu
+
+作用：
+
+qemu-kvm 为 kvm 提供底层仿真支持
+
+libvirt-daemon libvirtd 守护进程，管理虚拟机
+
+libvirt-client 用户端软件，提供客户端管理命令
+
+libvirt-daemon-driver-qemu libvirtd 连接 qemu 的驱动
+3 KVM虚拟机的组成需要哪几部分？
+
+参考答案
+
+1） 内核虚拟化模块（KVM）
+
+2） 系统设备仿真（QEMU）
+
+3） 虚拟机管理程序（LIBVIRT）
+
+4） 一个 XML 文件（虚拟机配置声明文件）
+
+5） 一个磁盘镜像文件（虚拟机的硬盘）
+4 列出下列virsh管理命令的含义
+
+virsh nodeinfo
+
+virsh list [--all]
+
+virsh net-list [--all]
+
+virsh start|reboot|shutdown node
+
+virsh destroy node
+
+virsh autostart node
+
+参考答案
+
+virsh nodeinfo 查看KVM节点（服务器）信息
+
+virsh list [--all] 列出虚拟机
+
+virsh net-list [--all] 列出虚拟网络
+
+virsh dominfo node 查看指定虚拟机的信息
+
+virsh start|reboot|shutdown node 运行|重启|关闭指定的虚拟机
+
+virsh destroy node 强制关闭指定的虚拟机
+
+virsh autostart node 将指定的虚拟机设为开机自动运行
+5 云计算三大服务模式
+
+参考答案
+
+SaaS
+
+PaaS
+
+IaaS
+6 什么是弹性云服务器
+
+参考答案
+
+弹性云服务器 ECS（Elastic Compute Service），是一种弹性可伸缩的计算服务（虚拟机），助您降低 IT 成本，提升运维效率
+
+
+02-----------------------------------------------------------------------------------------
+
+1 什么是云计算
+
+参考答案
+
+基于互联网的相关服务的增加、使用和交付模式
+
+这种模式提供可用的、便捷的、按需的网络访问， 进入可配置的计算资源共享池
+
+这些资源能够被快速提供，只需投入很少的管理工作，或与服务供应商进行很少的交互
+
+通常涉及通过互联网来提供动态易扩展且经常是虚拟化的资源
+2 什么是Openstack
+
+参考答案
+
+OpenStack是一个由NASA（美国国家航空航天局）和Rackspace合作研发并发起的项目
+
+OpenStack是一套IaaS解决方案
+
+OpenStack是一个开源的云计算管理平台
+
+以Apache许可证为授权
+3 Openstack主要组件有哪些，作用是什么
+
+参考答案
+
+Horizon：
+
+用于管理Openstack各种服务的、基于web的管理接口
+
+通过图形界面实现创建用户、管理网络、启动实例等操作
+
+Keystone：
+
+为其他服务提供认证和授权的集中身份管理服务
+
+也提供了集中的目录服务
+
+支持多种身份认证模式，如密码认证、令牌认证、以及AWS（亚马逊Web服务）登陆
+
+为用户和其他服务提供了SSO认证服务
+
+Neutron：
+
+一种软件定义网络服务
+
+用于创建网络、子网、路由器、管理浮动IP地址
+
+可以实现虚拟交换机、虚拟路由器
+
+可用于在项目中创建VPN
+
+Cinder：
+
+为虚拟机管理存储卷的服务
+
+为运行在Nova中的实例提供永久的块存储
+
+可以通过快照进行数据备份
+
+经常应用在实例存储环境中，如数据库文件
+
+Nova：
+
+在节点上用于管理虚拟机的服务
+
+Nova是一个分布式的服务，能够与Keystone交互实现认证，与Glance交互实现镜像管理
+
+Nova被设计成在标准硬件上能够进行水平扩展
+
+启动实例时，如果有则需要下载镜像
+
+Glance：
+
+扮演虚拟机镜像注册的角色
+
+允许用户为直接存储拷贝服务器镜像
+
+这些镜像可以用于新建虚拟机的模板
+
+
+03----------------------------------------------------------------------------------------
+
+
+1 如何通过命令行管理云主机类型
+
+参考答案
+
+列出所有的云主机类型
+
+    [root@openstack ~(keystone_admin)]# openstack flavor list
+
+创建一个云主机类型
+
+    [root@openstack ~(keystone_admin)]# openstack flavor create --public demo.tiny --id auto --ram 512 --disk 10 --vcpus 1
+
+删除云主机类型
+
+    [root@openstack ~(keystone_admin)]# openstack flavor delete demo.tiny
+
+2 如何通过命令行管理镜像
+
+参考答案
+
+上传镜像
+
+    [root@vh02 ~(keystone_admin)]# openstack image create --disk-format qcow2 --min-disk 10 --min-ram 512 --file /root/small.img small_rhel6
+
+列出镜像
+
+    [root@vh02 ~(keystone_admin)]# openstack image list
+
+查看镜像详情
+
+    [root@vh02 ~(keystone_admin)]# openstack image show small_rhel6
+
+3 阐述Openstack网络类型有哪些
+
+参考答案
+
+项目网络：由Neutron提供的项目内部网络，网络间可用VLAN隔离
+
+外部网络：可以让虚拟机接入外部网络，但需要配置浮动IP地址
+
+提供商网络：将实例连接到现有网络，实现虚拟机实例与外部系统共享同一二层网络
+4 阐述浮动IP地址的作用
+
+参考答案
+
+浮动IP地址用于从外界访问虚拟机实例，只能从现有浮动IP地址池中分配，创建外部网络时，浮动IP地址池被定义
+
+虚拟机实例起动后，可以为其关联一个浮动IP地址，也可以解除IP地址绑定，解除绑定后，再绑定时，不保证绑定原来的IP地址
+
+
+04-----------------------------------------------------------------------------------------------
+
+
+1 容器的核心技术有哪几种？
+
+参考答案
+
+Cgroups（Control Groups）-资源管理
+
+NameSpace-进程隔离
+
+SELinux安全
+2 阐述docker的优缺点
+
+参考答案
+
+优点：
+
+相比于传统的虚拟化技术，容器更加简洁高效
+
+传统虚拟机需要给每个VM安装操作系统
+
+容器使用的共享公共库和程序
+
+缺点：
+
+容器的隔离性没有虚拟化强
+
+共用Linux内核，安全性有先天缺陷
+
+SELinux难以驾驭
+
+监控容器和容器排错是挑战
+3 如何上传，下载镜像
+
+参考答案
+
+下载镜像
+
+    [root@docker1 ~]# docker  pull  rhel7
+
+上传镜像
+
+    [root@docker1 ~]# docker  push  rhel7
+
+4 docker镜像常用命令有哪些
+
+参考答案
+
+docker images 查看镜像列表
+
+docker history 查看镜像制作历史
+
+docker inspect 查看镜像底层信息
+
+docker pull 下载镜像
+
+docker push 上传镜像
+
+docker rmi 删除本地镜像
+
+docker save 镜像另存为tar包
+
+docker load 使用tar包导入镜像
+
+docker search 搜索镜像
+
+docker tag 修改镜像名称和标签
+5 docker容器常用命令有哪些
+
+参考答案
+
+docker run 运行容器
+
+docker ps 查看容器列表
+
+docker stop 关闭容器
+
+docker start 启动容器
+
+docker restart 重启容器
+
+docker attach|exec 进入容器
+
+docker inspect 查看容器底层信息
+
+docker top 查看容器进程列表
+
+docker rm 删除容器
+
+
+
+05-----------------------------------------------------------------------
+
+1 Dockerfile语法格式都有什么
+
+参考答案
+
+Dockerfile语法格式：
+
+FROM 基础镜像
+
+MAINTAINER 镜像创建者信息(说明)
+
+EXPOSE 开放的端口
+
+ENV 设置环境变量
+
+ADD 复制文件到镜像
+
+RUN 制作镜像时执行的命令,可以有多个
+
+WORKDIR 定义容器默认工作目录
+
+CMD 容器启动时执行的命令,仅可以有一条CMD
+2 如何定义一个私有仓库
+
+参考答案
+
+    [root@docker1 oo]# vim /etc/docker/daemon.json    //不写这个文件会报错
+    {
+    "insecure-registries" : ["192.168.1.10:5000"]    //使用私有仓库运行容器
+    }
+    [root@docker1 oo]# systemctl restart docker
+    [root@docker1 oo]# docker run -d -p 5000:5000 registry
+    273be3d1f3280b392cf382f4b74fea53aed58968122eff69fd016f638505ee0e
+    [root@docker1 oo]# curl 192.168.1.10:5000/v2/
+    {}
+
+3 如何查看私有仓库
+
+参考答案
+
+1）查看里面有什么镜像
+
+    [root@docker1 oo]# curl  http://192.168.1.10:5000/v2/_catalog
+    {"repositories":["busybox","myos"]}
+
+2）查看里面的镜像标签
+
+    [root@docker1 oo]# curl  http://192.168.1.10:5000/v2/busybox/tags/list 
+    {"name":"busybox","tags":["latest"]}
+    [root@docker1 oo]# curl  http://192.168.1.10:5000/v2/myos/tags/list 
+    {"name":"myos","tags":["http"]}
+
+4 如何新建Docker网络模型
+
+参考答案
+
+新建docker1网络模型
+
+    [root@docker1 ~]# docker  network  create  --subnet=172.30.0.0/16 docker01
+
+

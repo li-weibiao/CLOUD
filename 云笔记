@@ -1,0 +1,1490 @@
+ssh -X root@192.168.1.10
+ssh -X root@192.168.1.11
+ssh -X root@192.168.1.12
+
+
+git clone git://43.254.90.134/nsd1907.git
+yum -y install git
+更新必须进入git目录(nsd1907)
+gitpull
+
+创建虚拟机:
+[root@room9pc01 nsd1907]# base-vm nsd1907
+vm nsd1907 create                                          [  确定  ]
+[root@room9pc01 nsd1907]# virsh list --all
+[root@room9pc01 nsd1907]# virsh start nsd1907
+[root@room9pc01 nsd1907]# virsh console nsd1907
+连接到域 nsd1907
+
+user: root
+密码:a
+
+
+linux系统最好是用命令关机: shutdown ,否则很有可能会造成数据丢失
+
+eip 快速设置ip ,然后重启reboot
+
+虚拟机配置声明文件(xml): /etc/libvirt/qemu/
+一个磁盘镜像文件(虚拟机的硬盘) :/var/lib/libvirt/images/
+
+修改虚拟机的配置: virsh edit eth0
+
+vbr 就是交换机
+
+使用qemu-img info: [root@room9pc01 nsd1907]# virsh domblklist node1
+[root@room9pc01 nsd1907]# find / -name  tedu_nodesystemctl status network.service12.img
+/var/lib/libvirt/images/tedu_node12.img
+[root@room9pc01 nsd1907]# cd /var/lib/libvirt/images/
+[root@room9pc01 images]# qemu-img info  tedu_node12.img
+image: tedu_node12.img
+file format: qcow2
+virtual size: 30G (32212254720 bytes)
+disk size: 456M
+cluster_size: 65536
+backing file: /var/lib/libvirt/images/.node_tedu.qcow2
+Format specific information:
+    compat: 1.1
+    lazy refcounts: false
+[root@room9pc01 images]# qemu-img info .node_tedu.qcow2
+image: .node_tedu.qcow2
+file format: qcow2
+virtual size: 4.0G (4294967296 bytes)
+disk size: 461M
+cluster_size: 65536
+backing file: .node_base.qcow2
+Format specific information:
+    compat: 1.1
+    lazy refcounts: false
+
+
+virsh console 退出指令: logout     ctrl + ]
+在配置文件里,可以将文件虚拟成块设备
+
+生成新的后端磁盘镜像文件:
+1 简述Linux服务脚本中的case分支结构。
+
+参考答案
+
+Linux服务脚本通常利用$1位置变量来获取控制参数，并结合case分支来做出不同的响应，典型的结构如下：
+
+    case  "$1"  in                                              //检查第一个位置参数
+      start)
+            echo  "启动服务.. .." ;;                             //启动服务的语句块
+      stop)
+            echo  "停止服务.. .." ;;                               //停止服务的语句块
+      restart)
+            $0  stop                                                //停止服务
+            $0  start                                           //启动服务
+            ;;
+      *)
+            echo  $"用法: $0 {start|stop|restart}"             //提示正确用法
+            exit 1 
+    esac
+
+2 简述定义一个Shell函数的两种方法。
+
+参考答案
+
+方法1：
+
+    function  函数名 {
+        命令序列
+        .. ..
+1 简述Linux服务脚本中的case分支结构。
+
+参考答案
+
+Linux服务脚本通常利用$1位置变量来获取控制参数，并结合case分支来做出不同的响应，典型的结构如下：
+
+    case  "$1"  in                                              //检查第一个位置参数
+      start)
+            echo  "启动服务.. .." ;;                             //启动服务的语句块
+      stop)
+            echo  "停止服务.. .." ;;                               //停止服务的语句块
+      restart)
+            $0  stop                                                //停止服务
+            $0  start                                           //启动服务
+            ;;
+      *)
+            echo  $"用法: $0 {start|stop|restart}"             //提示正确用法
+            exit 1 
+    esac
+
+2 简述定义一个Shell函数的两种方法。
+
+参考答案
+
+方法1：
+
+    function  函数名 {
+        命令序列
+        .. ..
+    }
+1 简述Linux服务脚本中的case分支结构。
+
+参考答案
+
+Linux服务脚本通常利用$1位置变量来获取控制参数，并结合case分支来做出不同的响应，典型的结构如下：
+
+    case  "$1"  in                                              //检查第一个位置参数
+      start)
+            echo  "启动服务.. .." ;;                             //启动服务的语句块
+      stop)
+            echo  "停止服务.. .." ;;                               //停止服务的语句块
+      restart)
+            $0  stop                                                //停止服务
+            $0  start                                           //启动服务
+            ;;
+      *)
+            echo  $"用法: $0 {start|stop|restart}"             //提示正确用法
+            exit 1 
+    esac
+
+2 简述定义一个Shell函数的两种方法。
+
+参考答案
+
+方法1：
+
+    function  函数名 {
+        命令序列
+        .. ..
+    }
+
+方法2：
+
+    函数名() {
+        命令序列
+        .. ..
+    }
+
+3 简述Shell环境常见的中断及退出控制指令。
+
+参考答案
+
+    break：跳出当前所在的循环体，执行循环体后的语句。
+    continue:跳过循环体内余下的语句，重新判断条件以便执行下一次循环。
+    exit:退出脚本，默认返回值是 0。
+
+1 简述Linux服务脚本中的case分支结构。
+
+参考答案
+
+Linux服务脚本通常利用$1位置变量来获取控制参数，并结合case分支来做出不同的响应，典型的结构如下：
+
+    case  "$1"  in                                              //检查第一个位置参数
+      start)
+            echo  "启动服务.. .." ;;                             //启动服务的语句块
+      stop)
+            echo  "停止服务.. .." ;;                               //停止服务的语句块
+      restart)
+            $0  stop                                                //停止服务
+            $0  start                                           //启动服务
+            ;;
+      *)
+            echo  $"用法: $0 {start|stop|restart}"             //提示正确用法
+            exit 1 
+    esac
+
+2 简述定义一个Shell函数的两种方法。
+
+参考答案
+
+方法1：
+
+    function  函数名 {
+        命令序列
+        .. ..
+    }
+
+方法2：
+
+    函数名() {
+        命令序列
+        .. ..
+    }
+
+3 简述Shell环境常见的中断及退出控制指令。
+
+参考答案
+
+    break：跳出当前所在的循环体，执行循环体后的语句。
+    continue:跳过循环体内余下的语句，重新判断条件以便执行下一次循环。
+    exit:退出脚本，默认返回值是 0。
+
+
+
+
+方法2：
+
+    函数名() {
+        命令序列
+        .. ..
+    }
+
+3 简述Shell环境常见的中断及退出控制指令。
+
+参考答案
+
+    break：跳出当前所在的循环体，执行循环体后的语句。
+    continue:跳过循环体内余下的语句，重新判断条件以便执行下一次循环。
+    exit:退出脚本，默认返回值是 0。
+
+
+    }
+
+方法2：
+
+    函数名() {
+1 简述Linux服务脚本中的case分支结构。
+
+参考答案
+
+Linux服务脚本通常利用$1位置变量来获取控制参数，并结合case分支来做出不同的响应，典型的结构如下：
+
+    case  "$1"  in                                              //检查第一个位置参数
+      start)
+            echo  "启动服务.. .." ;;                             //启动服务的语句块
+      stop)
+            echo  "停止服务.. .." ;;                               //停止服务的语句块
+      restart)
+            $0  stop                                                //停止服务
+            $0  start                                           //启动服务
+            ;;
+      *)
+            echo  $"用法: $0 {start|stop|restart}"             //提示正确用法
+            exit 1 
+    esac
+
+2 简述定义一个Shell函数的两种方法。
+
+参考答案
+
+方法1：
+
+1 简述Linux服务脚本中的case分支结构。
+
+参考答案
+
+Linux服务脚本通常利用$1位置变量来获取控制参数，并结合case分支来做出不同的响应，典型的结构如下：
+
+    case  "$1"  in                                              //检查第一个位置参数
+      start)
+            echo  "启动服务.. .." ;;                             //启动服务的语句块
+      stop)
+            echo  "停止服务.. .." ;;                               //停止服务的语句块
+      restart)
+            $0  stop                                                //停止服务
+            $0  start                                           //启动服务
+            ;;
+      *)
+            echo  $"用法: $0 {start|stop|restart}"             //提示正确用法
+            exit 1 
+    esac
+
+2 简述定义一个Shell函数的两种方法。
+
+参考答案
+
+方法1：
+
+    function  函数名 {
+        命令序列
+        .. ..
+    }
+
+方法2：
+
+    函数名() {
+        命令序列
+        .. ..
+    }
+
+3 简述Shell环境常见的中断及退出控制指令。
+
+参考答案
+
+    break：跳出当前所在的循环体，执行循环体后的语句。
+    continue:跳过循环体内余下的语句，重新判断条件以便执行下一次循环。
+    exit:退出脚本，默认返回值是 0。
+
+
+    function  函数名 {
+        命令序列
+        .. ..
+    }
+
+方法2：
+
+    函数名() {
+        命令序列
+        .. ..
+    }
+
+3 简述Shell环境常见的中断及退出控制指令。
+
+参考答案
+
+    break：跳出当前所在的循环体，执行循环体后的语句。
+    continue:跳过循环体内余下的语句，重新判断条件以便执行下一次循环。
+    exit:退出脚本，默认返回值是 0。
+
+
+        命令序列
+        .. ..
+    }
+
+3 简述Shell环境常见的中断及退出控制指令。
+
+参考答案
+
+    break：跳出当前所在的循环体，执行循环体后的语句。
+    continue:跳过循环体内余下的语句，重新判断条件以便执行下一次循环。
+    exit:退出脚本，默认返回值是 0。
+
+
+  [root@room9pc01 ~]# cd /var/lib/libvirt/images/
+[root@room9pc01 images]# qemu-img create -b .node_base.qcow2 -f qcow2 nsd1907.img 20G
+Formatting 'nsd1907.img', fmt=qcow2 size=21474836480 backing_file='.node_base.qcow2' encryption=off cluster_size=65536 lazy_refcounts=off
+
+修改配置文件:
+[root@room9pc01 images]# cp .node_base.xml /etc/libvirt/qemu/nsd1907.xml
+[root@room9pc01 images]# cd /etc/libvirt/qemu/
+[root@room9pc01 qemu]# vim nsd1907.xml
+2   <name>nsd1907</name>
+26       <source file='/var/lib/libvirt/images/nsd1907.img'/>
+
+virsh define /etc/libvirt/qemu/nsd1907.xml
+virsh start nsd1907
+virsh console nsd1907
+
+
+查找扩容的硬盘:
+[root@room9pc01 CLOUD]# virsh domblklist nsd1907
+目标     源
+------------------------------------------------
+vda        /var/lib/libvirt/images/nsd1907.img
+
+语言改为英文:
+
+[root@room9pc01 images]# echo $LANG
+zh_CN.UTF-8
+[root@room9pc01 images]# LANG=C[student@room9pc01 ~]$ virsh dominfo node1
+Id:             6
+名称：       node1
+UUID:           ecff9c0b-416f-47a3-acc2-c8c3fc409826
+OS 类型：    hvm
+状态：       running
+CPU：          2
+CPU 时间：   1320.2s
+最大内存： 1488896 KiB
+使用的内存： 1488284 KiB
+持久：       是
+自动启动： 禁用
+管理的保存： 否
+安全性模式： none
+安全性 DOI： 0
+
+
+
+扩容硬盘:
+[root@room9pc01 CLOUD]# virsh blockresize --path /var/lib/libvirt/images/nsd1907.img --size 50G nsd1907
+---------------------------(接下来是虚拟机)-----------------------------------------------
+分区扩容:
+lsblk
+growpart /dev/vda 1  //有空格,代表第一个分区,不是vda1
+
+文件系统扩容:
+xfs_growfs   /
+df -h
+
+Nova 计算节点
+Glance 网络服务后端盘,例如网络yum源 管理镜像软件
+Swift 用于存储
+Quantum 负责管理openstack的网络 
+Cinder 逻辑卷 
+Keystone 认证 
+Horizon 就是Apache
+
+
+[student@room9pc01 NOSQL]$ free -m
+
+
+[student@room9pc01 NOSQL]$ free -k
+
+后缀名改为.ini,例如answer.ini
+
+pptp使用的协议为gre
+(隧道.翻墙)
+[elk]
+name=elk - Base
+baseurl="ftp://192.168.1.254/elk"
+enabled=1
+gpgcheck=0[student@room9pc01 ~]$ virsh dominfo node1
+Id:             6
+名称：       node1
+UUID:           ecff9c0b-416f-47a3-acc2-c8c3fc409826
+OS 类型：    hvm
+状态：       running
+CPU：          2
+CPU 时间：   1320.2s
+最大内存： 1488896 KiB
+使用的内存： 1488284 KiB
+持久：       是
+自动启动： 禁用
+管理的保存： 否
+安全性模式： none
+安全性 DOI： 0
+
+
+ovs 交换机
+
+命令行登录:
+[root@openstack ~]# bash
+[root@openstack ~]# source keystonerc_admin [student@room9pc01 ~]$ virsh dominfo node1
+Id:             6
+名称：       node1
+UUID:           ecff9c0b-416f-47a3-acc2-c8c3fc409826
+OS 类型：    hvm
+状态：       running
+CPU：          2
+CPU 时间：   1320.2s
+最大内存： 1488896 KiB
+使用的内存： 1488284 KiB
+持久：       是
+自动启动： 禁用
+管理的保存： 否
+安全性模式： none
+安全性 DOI： 0
+
+[root@openstack ~(keystone_admin)]# opens
+openssl                         openstack                       openstack-keystone-sample-data
+[root@openstack ~(keystone_admin)]# openstack user list
++----------------------------------+---------+
+| ID                               | Name    |
++----------------------------------+---------+
+| 3d473d00bbe54abab7621564c745a262 | cinder  |
+| 7004954584164a579fa8b11d9c278bb6 | nova    |
+| 7b8a9bd2070c4958a83bbcefe12f56c2 | admin   |
+| a720fd8a028945749813a87dcb18388e | glance  |
+| e2ae5d8d040d4e7dbcbc9204fddae991 | neutron |
++----------------------------------+---------+[student@room9pc01 ~]$ virsh dominfo node1
+Id:             6
+名称：       node1
+UUID:           ecff9c0b-416f-47a3-acc2-c8c3fc409826
+OS 类型：    hvm
+状态：       running
+CPU：          2
+CPU 时间：   1320.2s
+最大内存： 1488896 KiB
+使用的内存： 1488284 KiB
+持久：       是
+自动启动： 禁用
+管理的保存： 否
+安全性模式： none
+安全性 DOI： 0
+
+[root@openstack ~(keystone_admin)]# exit
+exit
+
+挂载是临时的,需要写进配置文件
+
+crtl + f5 强制刷新[student@room9pc01 ~]$ virsh dominfo node1
+Id:             6
+名称：       node1
+UUID:           ecff9c0b-416f-47a3-acc2-c8c3fc409826
+OS 类型：    hvm
+状态：       running
+CPU：          2
+CPU 时间：   1320.2s
+最大内存： 1488896 KiB
+使用的内存： 1488284 KiB
+持久：       是
+自动启动： 禁用
+管理的保存： 否
+安全性模式： none
+安全性 DOI： 0
+
+
+
+网关也要分配一个ip地址.我们默认分最后的254给他
+
+查看dns:[student@room9pc01 ~]$ virsh dominfo node1
+Id:             6
+名称：       node1
+UUID:           ecff9c0b-416f-47a3-acc2-c8c3fc409826
+OS 类型：    hvm
+状态：       running
+CPU：          2
+CPU 时间：   1320.2s
+最大内存： 1488896 KiB
+使用的内存： 1488284 KiB
+持久：       是
+自动启动： 禁用
+管理的保存： 否
+安全性模式： none
+安全性 DOI： 0
+
+[root@openstack ~]# cat /etc/resolv.conf 
+; generated by /usr/sbin/dhclient-script
+nameserver 192.168.1.254
+
+所有初始的都选lan
+
+在nova01上:[root@localhost ~]# virsh list
+ Id    名称                         状态
+----------------------------------------------------
+ 1     instance-00000001              running
+
+[root@nova01 ~]# systemctl status openstack-nova-compute.service 
+● openstack-nova-compute.service - OpenStack Nova Compute Server
+   Loaded: loaded (/usr/lib/systemd/system/openstack-nova-compute.service; enabled; vendor preset: disabled)
+   Active: active (running) since 五 2019-11-08 08:57:56 CST; 2h 32min ago
+ Main PID: 980 (nova-compute)
+    Tasks: 24
+   CGroup: /system.slice/openstack-nova-compute.service
+           ├─  980 /usr/bin/python2 /usr/bin/nova-compute
+           └─14264 /usr/bin/python /bin/privsep-helper --config-file /usr/sha...
+
+11月 08 08:57:50 localhost nova-compute[980]: Option "rpc_backend" from gro....
+11月 08 08:57:56 localhost systemd[1]: Started OpenStack Nova Compute Server.
+11月 08 11:27:02 localhost nova-compute[980]: /usr/lib/python2.7/site-packa....
+11月 08 11:27:02 localhost nova-compute[980]: __import__(import_str)
+11月 08 11:27:05 localhost sudo[14223]:     nova : TTY=unknown ; PWD=/ ; US...f
+11月 08 11:27:12 localhost sudo[14251]:     nova : TTY=unknown ; PWD=/ ; US...k
+11月 08 11:27:12 localhost ovs-vsctl[14293]: ovs|00001|vsctl|INFO|Called as ...
+11月 08 11:27:12 localhost sudo[14296]:     nova : TTY=unknown ; PWD=/ ; US...0
+11月 08 11:27:12 localhost sudo[14299]:     nova : TTY=unknown ; PWD=/ ; US...0
+11月 08 11:27:12 localhost sudo[14302]:     nova : TTY=unknown ; PWD=/ ; US...0
+Hint: Some lines were ellipsized, use -l to show in full.
+
+
+[root@nova01 ~]# wc -l /etc/nova/nova.conf 
+9301 /etc/nova/nova.conf
+[root@nova01 ~]# vim +8430 /etc/nova/nova.conf
+
+
+[root@openstack conf.d]# vim 15-horizon_vhost.conf 
+[root@openstack conf.d]# apachectl  graceful
+[root@openstack conf.d]# firefox 192.168.1.10
+-bash: firefox: 未找到命令
+[root@openstack conf.d]# systemctl restart httpd
+
+
+screen   分屏
+
+[root@nova02 ~]# systemctl start libvirtd
+
+[root@nova02 ~]# systemctl stop libvirtd
+
+
+virsh list --all
+
+
+红帽6:
+在红帽6里,httpd服务是apache2,下载是用apt-get a install apache2
+
+查看状态service  apache2 status
+
+
+virsh  domiflist  node0 查看网络
+
+vbr 虚拟交换机
+
+查找本机的docker镜像:[root@docker1 ~]# docker images
+
+查找网络上的docker镜像:[root@docker1 ~]# docker search ngnix
+
+下载docker镜像: [root@docker1 ~]# docker pull docker.io/busybox
+
+名称 + 标签 == 唯一
+文件名  
+        路径 
+                 
+eg:/etc/f1
+   /root/f2      //这样表示唯一  
+
+image id 相同则是同一个东西
+
+tar tvf 查看tar包
+
+备份:[root@docker1 ~]# docker save docker.io/busybox:latest -o busybox.tar        //docker.io/busybox 网上下载的 , latest  标签 
+[root@docker1 ~]# scp busybox.tar root@192.168.1.32:/root
+
+
+导入:docker  load -i busybox.tar   
+[root@docker2 ~]# docker  load -i busybox.tar
+1da8e4c8d307: Loading layer 1.437 MB/1.437 MB
+Loaded image: docker.io/busybox:latest
+
+
+[root@docker1 docker]# echo $-
+himBH
+
+[root@docker1 docker]# w
+ 14:16:36 up  3:33,  1 user,  load average: 0.06, 0.40, 0.27
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+root     pts/0    192.168.1.254    14:02    4.00s  0.10s  0.00s w
+
+
+
+查看进程:
+[root@docker1 ~]# ps -ef
+UID        PID  PPID  C STIME TTY          TIME CMD
+root         1     0  0 10:42 ?        00:00:01 /usr/lib/systemd/systemd --switc
+root         2     0  0 10:42 ?        00:00:00 [kthreadd]
+root         3     2  0 10:42 ?        00:00:00 [ksoftirqd/0]
+root         5     2  0 10:42 ?        00:00:00 [kworker/0:0H]
+root         7     2  0 10:42 ?        00:00:00 [migration/0]
+root         8     2  0 10:42 ?        00:00:00 [rcu_bh]
+root         9     2  0 10:42 ?        00:00:00 [rcu_sched]
+
+容器的作用:类似于独立的机器,在里面用rm -rf 删除一切也不会影响真机,就好像搭建了一个实验平台
+
+
+[root@docker1 ~]# docker run -it docker.io/redis:latest /bin/bash
+
+
+
+查看哪些指令在哪个包里:
+[root@04173150922a yum.repos.d]# yum p
+1 简述Linux服务脚本中的case分支结构。
+
+参考答案
+
+Linux服务脚本通常利用$1位置变量来获取控制参数，并结合case分支来做出不同的响应，典型的结构如下：
+
+    case  "$1"  in                                              //检查第一个位置参数
+      start)
+            echo  "启动服务.. .." ;;                             //启动服务的语句块
+      stop)
+            echo  "停止服务.. .." ;;                               //停止服务的语句块
+      restart)
+            $0  stop                                                //停止服务
+            $0  start                                           //启动服务
+            ;;
+      *)
+            echo  $"用法: $0 {start|stop|restart}"             //提示正确用法
+            exit 1 
+    esac
+
+2 简述定义一个Shell函数的两种方法。
+
+参考答案
+
+方法1：
+
+    function  函数名 {
+        命令序列
+        .. ..
+    }
+
+方法2：
+
+    函数名() {
+        命令序列
+        .. ..
+    }
+
+3 简述Shell环境常见的中断及退出控制指令。
+
+参考答案
+
+    break：跳出当前所在的循环体，执行循环体后的语句。
+    continue:跳过循环体内余下的语句，重新判断条件以便执行下一次循环。
+    exit:退出脚本，默认返回值是 0。
+
+rovides  ifconfig 
+Loaded plugins: fastestmirror, ovl
+Loading mirror speeds from cached hostfile
+local_repo/filelists_db                                  | 6.9 MB     00:00     
+net-tools-2.0-0.22.20131004git.el7.x86_64 : Basic networking tools
+Repo        : local_repo
+Matched from:
+Filename    : /sbin/ifconfig
+
+
+
+rpm -ql 看包安装在哪里了
+     -qf  查看属于哪一个包
+
+
+docker start be    //be是id值,只要符合唯一,输入两个都行
+
+docker stop 175
+
+
+docker ps 
+
+docker ps -q    //看容器id    
+          -aq  //看所有容器的id,只要运行过的都有
+[root@docker1 ~]#docker stop
+
+[root@docker1 ~]# docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+docker run -itd  
+
+
+容器是运行的,镜像是静止的
+
+真机可以管理容器,但容器管理不了真机
+
+
+docker top  从容器外看容器内的进程 ,后面接容器的id就行
+
+crtl +p +q   按照顺序来,为主根留条生路
+
+history -c 清除历史
+
+rpm -ql
+
+[root@docker1 567]# cat /usr/lib/systemd/system/httpd.service  ^C
+[root@docker1 567]# 
+[root@docker1 567]# cat /etc/sysconfig/httpd   ^C
+
+
+[root@cangku etc]# ss -ltun
+
+配置镜像仓库,新建虚拟机: 5  eip 30
+    6  rebooot
+    7  reboot
+    8  cd /etc/yum.repos.d/
+    9  ls
+   10  vim local.repo 
+   11  yum clean all
+   12  ls
+   13  yum repolist 
+   14  yum install docker-distribution bash-com* net-tools vim psmisc iproute
+   15  cd ..
+   16  systemctl start docker-distribution
+   17  systemctl enable docker-distribution
+   18  netstat -untlp | grep :5000
+   19  ss -ltun
+
+
+配置镜像仓库后,修改docker1,docker2:[root@docker1 ~]# vim /etc/sysconfig/docker
+[root@docker1 ~]# docker stop $(docker ps -q)
+6927ee796587
+[root@docker1 ~]# scp /etc/sysconfig/docker  root@192.168.1.32:/etc/sysconfig/
+root@192.168.1.32's password: 
+docker                                        100% 1990     1.6MB/s   00:00    
+[root@docker1 ~]# systemctl restart docker
+
+
+用脚本上传:[root@docker1 ~]# for i in latest python httpd sshd;do
+> docker tag  myos:${i} 192.168.1.30:5000/myos:${i};
+> docker push 192.168.1.30:5000/myos:${i};
+> done
+
+从仓库下载镜像:[root@docker2 ~]# docker run -it 192.168.1.30:5000/myos:latest
+
+
+写了脚本后,在写了脚本的目录里执行: docker build -t docker.io/123:123 .
+
+创建自定义网墙:[root@docker1 ~]# docker network create --subnet=10.10.10.0/24 docker1
+7e2452dac83a37ca4805cf273250738de38a70d2d8ee4b8b00c137ccb960eb35
+
+[root@docker1 ~]# docker network list     or  ls 
+NETWORK ID          NAME                DRIVER              SCOPE
+7c4eadb40082        bridge              bridge              local               
+7e2452dac83a        docker1             bridge              local               
+891427eacd7e        host                host                local               
+3e344ec83099        none                null                local               
+[root@docker1 ~]# docker run -itd myos:latest
+a4806cff14b4f14797b9fc447d10c8230cb101a91aed171ac7dded7bd2861642
+[root@docker1 ~]# docker run -itd myos:latest
+9c9c7c4f2ece7901741ac1bae743e3349dc2c0db70fcdd0f05dc35acbfa77e64
+[root@docker1 ~]# docker run -itd --network=docker1 myos:latest
+a3b87bc047f7f858a1833b2ed28e090ce8e4e80049e2af65713576c9e16bd934
+[root@docker1 ~]# docker run -itd --network=docker1 myos:latest
+ce8da227a50497514c097bad30055e73809be16f1eea747f6b6db3a9c8c8c41e
+
+
+[root@docker1 ~]# docker  network   inspect   docker1
+
+[root@docker1 ~]# docker  inspect a4806
+[
+```````````````````````````````````
+  "EndpointID": "ee1acfce880f28c8b7759b1b2f5e11218c79c0dc695888efc41ebdca8a9fb4ba",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02"
+                }
+
+
+curl -i http://172.17.0.3/
+
+mount -t nfs -o rw 192.168.1.30:/var/webroot /mnt
+mount -l 
+
+导入容器前,先启动容器:
+docker run -it docker.io/nginx:latest /bin/bash
+
+一直按空格
+[root@docker1 567]# docker run -it docker.io/nginx:latest /bin/bash
+
+
+
+
+
+root@da1d0a0e90a5:/# 
+root@da1d0a0e90a5:/# 
+root@da1d0a0e90a5:/# nginx -T
+
+
+查找配置文件:nginx -T
+
+找到文件后:exit
+
+docker run -itd -v /mnt:/usr/share/ngnix/html docker.io/ngnix:latest
+
+docker inspect 927  //id
+
+curl -i http://172.17.0.4/
+
+在docker2上:
+
+mount -t nfs -o rw 192.168.1.30:/var/webroot /mnt/
+开启远程镜像: docker run -itd -v /mnt:/var/www/html 192.168.1.30:5000/myos:httpd
+
+docker ps
+
+docker inspect dc //id
+
+生成密钥:[root@ansible ansible]# cd /root/.ssh/
+[root@ansible .ssh]# ls
+authorized_keys  known_hosts
+[root@ansible .ssh]# ssh-keygen -t rsa -b 2048 -N '' -f key
+
+
+脚本传递密钥:[root@ansible .ssh]# for i in web1 web2 db1 db2 cache; do ssh-copy-id -i key.pub ${i};done
+
+校验远程连接:[root@ansible .ssh]# ssh -i key web1
+
+
+检测ping的指令:ansible all -m ping -k
+
+远程命令执行模块[root@ansible ansible]# cd  /etc/ansible
+[root@ansible ansible]# ansible web -m command -a 'uptime'
+web1 | SUCCESS | rc=0 >>
+ 14:17:10 up  4:01,  1 user,  load average: 0.00, 0.01, 0.03
+web2 | SUCCESS | rc=0 >>
+root       626     1  0 10:16 ?        00:00:00 /usr/sbin/sshd -D
+root     23110   626  0 14:24 ?        00:00:00 sshd: root@pts/0
+root     23153 23152  0 14:24 pts/0    00:00:00 /bin/sh -c ps -ef | grep sshd
+root     23155 23153  0 14:24 pts/0    00:00:00 grep sshd
+
+web1 | SUCCESS | rc=0 >>
+root       623     1  0 10:15 ?        00:00:00 /usr/sbin/sshd -D
+root     23158   623  0 14:24 ?        00:00:00 sshd: root@pts/0
+root     23201 23200  0 14:24 pts/0    00:00:00 /bin/sh -c ps -ef | grep sshd
+root     23203 23201  0 14:24 pts/0    00:00:00 grep sshd
+
+web2 | SUCCESS | rc=0 >>
+ 14:17:10 up  4:00,  1 user,  load average: 0.00, 0.01, 0.02
+
+[root@ansible ansible]# ps -ef | grep sshd
+root       672     1  0 09:57 ?        00:00:00 sshd: root@pts/0
+root     23935     1  0 11:45 ?        00:00:00 /usr/sbin/sshd -D
+root     24159   674  0 14:19 pts/0    00:00:00 grep --color=auto sshd
+
+
+万能远程模块:
+[root@ansible ansible]# ansible web -m shell -a 'ps -ef | grep sshd'       // shell通过/bin/sh执行命令,可以执行任意命令,但不能执行交互式的命令
+web2 | SUCCESS | rc=0 >>
+root       626     1  0 10:16 ?        00:00:00 /usr/sbin/sshd -D
+root     23110   626  0 14:24 ?        00:00:00 sshd: root@pts/0
+root     23153 23152  0 14:24 pts/0    00:00:00 /bin/sh -c ps -ef | grep sshd
+root     23155 23153  0 14:24 pts/0    00:00:00 grep sshd
+
+web1 | SUCCESS | rc=0 >>
+root       623     1  0 10:15 ?        00:00:00 /usr/sbin/sshd -D
+root     23158   623  0 14:24 ?        00:00:00 sshd: root@pts/0
+root     23201 23200  0 14:24 pts/0    00:00:00 /bin/sh -c ps -ef | grep sshd
+root     23203 23201  0 14:24 pts/0    00:00:00 grep sshd
+
+有""和''的情况:[root@ansible ansible]# ansible web -m shell -a 'echo ${HOSTNAME}'
+web1 | SUCCESS | rc=0 >>
+ 
+
+web2 | SUCCESS | rc=0 >>
+web2
+
+[root@ansible ansible]# ansible web -m shell -a "echo ${HOSTNAME}"      
+web2 | SUCCESS | rc=0 >>
+ansible
+
+web1 | SUCCESS | rc=0 >>
+ansible
+
+
+分析:
+有""先在本机执行docker push 192.168.1.100:5000/docker.io/myos:latest
+也就是ansible web -m shell -a  echo  ansible
+然后远程输出: ansible
+
+
+有''直接输出,不执行里面的内容,在远程主机执行
+也就是:ansible web -m shell -a  echo ${HOSTNAME}
+然后远程输出:web1  web2
+
+远程执行脚本:[root@ansible ~]# vim 1.sh
+#!/bin/bash
+id nb
+if [ $? != 0 ];then                                                   
+ useradd wk
+ echo 456 | passwd --stdin wk
+fi
+
+[root@ansible ~]# ansible web -m script -a '1.sh'
+web1 | SUCCESS => {
+    "changed": true, 
+    "rc": 0, 
+    "stderr": "Shared connection to web1 closed.\r\n", 
+    "stdout": "uid=1000(nb) gid=1000(nb) 组=1000(nb)\r\n", docker push 192.168.1.100:5000/docker.io/myos:latest
+    "stdout_lines": [
+        "uid=1000(nb) gid=1000(nb) 组=1000(nb)"
+    ]
+}
+web2 | SUCCESS => {
+    "changed": true, 
+    "rc": 0, 
+    "stderr": "Shared connection to web2 closed.\r\n", 
+    "stdout": "id: nb: no such user\r\n更改用户 wk 的密码 。\r\npasswd：所有的身份验证令牌已经成功更新。\r\n", 
+    "stdout_lines": [
+        "id: nb: no such user", 
+        "更改用户 wk 的密码 。", 
+        "passwd：所有的身份验证令牌已经成功更新。"
+    ]
+}
+
+
+
+检测是否是开机自启:systemctl is-enabled mariadb
+
+远程装包:[root@ansible ~]# ansible db -m yum -a 'name="mariadb-server" state=installed'
+
+远程设置开启和开机自启:[root@ansible ~]# ansible db  -m service -a 'name="mariadb" enabled="yes" state="started"'
+
+
+远程copy指令:[root@ansible ~]# ansible all -m copy -a 'src=/etc/resolv.conf dest=/etc/'  //注意文件存放的目录
+
+(ansible all -m copy -a 'src=/etc/resolv.conf dest=/etc/resolve.conf'   我用这个有问题)
+
+[root@ansible ~]# ansible all -m copy -a 'src=/root/my.cnf dest=/etc/my.cnf'
+
+
+替换和修改:
+[root@ansible ~]# ansible db -m lineinfile -a 'path="/etc/my.cnf" regexp="^binlog-format" line="binlog-format=row"'
+db2 | SUCCESS => {
+    "backup": "", 
+    "changed": true, 
+    "msg": "line replaced"
+}
+db1 | SUCCESS => {
+    "backup": "", 
+    "changed": true, 
+    "msg": "line replaced"
+
+
+[root@ansible ~]# ansible db -m replace -a 'path="/etc/my.cnf" regexp="row" replace="mixed"'
+db1 | SUCCESS => {
+    "changed": true, 
+    "msg": "1 replacements made"
+}
+db2 | SUCCESS => {
+    "changed": true, 
+    "msg": "1 replacements made"
+
+
+cat -A  a   //a文本文件
+
+yuml的 语法格式 : 注意空格
+
+[root@ansible ~]# vim ping.yml
+---
+- name: test ping
+  hosts: all
+  remote_user: root
+  tasks:
+    - ping:
+
+查找模板:
+[root@ansible ~]# ansible-doc yum
+> YUM    (/usr/lib/python2.7/site-packages/ansible/modules/packaging/os/yum.py)
+``````````````
+
+[root@ansible ~]# ansible-doc lineinfile
+
+[root@ansible ~]# ansible-doc copy
+
+[root@ansible ~]# ansible-doc service
+
+
+crtl + v 选中空格  + d 删除空格    
+crtl + v + shift + i 插入空格   
+
+/etc/
+
+
+
+
+---
+- name: add user
+  hosts: web
+  vars:
+    username: bb
+  tasks:
+    - name: add user "{{ username }}"
+      user:
+       name: "{{ username }}"
+       group: users
+    - name: set password
+      shell: echo 123|passwd --stdin "{{ username }}"
+
+设置加密密码:
+
+---
+- name: add user
+  hosts: cache
+  vars:
+    username: bb
+  tasks:
+    - name: add user "{{ username }}"                                   //JSON语法规则: - 数据在名称/值对中
+       user:                                                                          - 数据由逗号分隔
+       name: "{{ username }}"                                                         - 大括号保存对象
+       group: users                                                                   - 中括号保存数组 
+       password: "{{ 'abc' | password_hash('sha512') }}"
+
+在外部设置变量所用的脚本:
+
+---
+- name: add user
+  hosts: cache
+  tasks:
+    - name: add user "{{ username }}"
+      user: 
+       name: "{{ username }}"
+       group: users
+       password: "{{ abc | password_hash('sha512') }}"
+
+[root@ansible ~]# ansible-playbook user01.yml -e '{"username": "plj", "abc": "123qqq...A"}'
+
+[root@ansible ~]# ansible-playbook user01.yml -e @aaa.yml
+
+[root@ansible ~]# cat aaa.yml 
+---
+ username:
+   nb
+ abc: 
+   123qqq...A
+
+
+如确定没有问题,忽略错误:
+---                                                                                                 //YAML语法:YAML的结构通过空格来显示
+- hosts: web                                                                                         - 数组使用 "-" 来表示 
+  tasks:                                                                                             - 键值对使用":"来表示 
+    - shell: mkdir /tmp/cache                                                                        - YAML使用一个固定的缩进风格表示数据     
+      ignore_errors: True                                                                              层级结构关系
+    - service:                                                                                       - 一般每个缩进级别由两个以上空格组成
+        name: httpd                                                                                  - #表示注释
+        state: restarted                                                                            注意: - 不要使用tab,缩进是初学者容易出错的
+                                                                                                                                      的地方
+查看系统负载: uptime                                                                                       - 同一层级缩进必须对齐
+
+fg 开启后端程序
+
+---
+- hosts: web
+  tasks:
+    - shell: uptime | awk '{printf("%.2f",$(NF-2))}'     //NF  从后取数
+      register: result
+    - name: shutdown service
+      service:
+        name: httpd
+        state: stopped
+      when: result.stdout|float > 0.7    //用过滤器和float将字符串转换成数字
+
+
+
+awk 'BEGIN{while(1){}}'       //死循环
+
+用变量来写脚本:
+
+---
+- hosts: db1
+  tasks:
+    - name: create user {{ item.uname }}
+      user:
+        name: "{{ item.uname }}"
+        group: "{{ item.group }}"
+        password: "{{ item.passwd | password_hash('sha512') }}"
+      with_items:                        //需要用yaml格式    
+         -
+          uname: nb
+          group: bin
+          passwd: "123456"    //字符串用""包起来
+         -
+          uname: wk
+          group: man
+          passwd: banana
+         -
+          uname: dd
+          group: daemon
+          passwd: book
+         -
+          uname: jj
+          group: mysql
+          passwd: 123qqq...A
+         -
+          uname: xx
+          group: root
+          passwd: a
+
+awk '{A[$1]++}END{for(a in A)print A[a],a}' | sort -nr    //sort 排序
+
+du -sh /var/www/html/index.html
+
+
+第一elasticsearch,第二logstash,第三kibana
+
+vimdiff  f1  f2                  //文件对比
+
+
+
+
+首先移动到:[root@es5 ~]# cd /usr/share/elasticsearch/bin
+
+
+装软件:[root@es5 bin]# ./plugin install file:///root/elk/elasticsearch-head-master.zip
+
+[root@es5 bin]# ./plugin install  file:///root/elk/elasticsearch-kopf-master.zip
+
+[root@es5 bin]# ./plugin install  file:///root/elk/bigdesk-master.zip 
+
+
+查看是否安装:[root@es5 bin]# ./plugin list
+Installed plugins in /usr/share/elasticsearch/plugins:
+    - head
+    - kopf
+    - bigdesk
+
+
+金步国作品集
+
+
+用命令来执行:
+
+[root@es5 ~]# vim aaa
+[root@es5 ~]# curl -XPUT "http://192.168.1.54:9200/aaa" -d '
+> {"settings": {
+>   "index": {
+>      number_of_shards: 5,
+>      number_of_replicas: 2
+>   }
+>  }
+> }'         //直接输入执行,aaa里就是这些东西
+
+
+
+用命令增加数据:
+[root@es5 ~]# curl -XPUT "http://es2:9200/tedu/teacher/5" -d '
+{"姓名": "欣欣",
+ "爱好": "男",
+ "阶段": "4"
+}'
+
+用命令修改数据:
+[root@es5 ~]# curl -XPOST "http://es5:9200/tedu/teacher/1/_update" -d '
+> {"doc": {"爱好": "做头发"}
+> }'
+
+
+查询:
+[root@es5 ~]# curl -XGET "http://es5:9200/tedu/teacher/1?pretty"    //pretty 竖着显示
+{
+  "_index" : "tedu",
+  "_type" : "teacher",
+  "_id" : "1",
+  "_version" : 7,
+  "found" : true,
+  "_source" : {
+    "姓名" : "犇犇",
+    "爱好" : "做头发",
+    "阶段" : "1"
+  }
+}
+
+删除:
+[root@es5 ~]# curl -XGET "http://es5:9200/tedu/teacher/1"   //删除某个
+
+[root@es5 ~]# curl -XGET "http://es5:9200/tedu"   //删除整个区域
+
+
+导入:
+[root@es5 elk]# curl -XPOST "http://192.168.1.55:9200/oo/xx/_bulk" --data-binary @accounts.json
+
+[root@es5 elk]# curl -XPOST "http://192.168.1.55:9200/_bulk" --data-binary @shakespeare.json
+
+
+[root@es5 elk]# curl -XPOST "http://es5:9200/_bulk" --data-binary@logs.jsonl
+
+
+制作本地yum:[root@room9pc01 elk]# cd ..
+[root@room9pc01 ftp]# createrepo elk/           //制作成yum识别的yum包
+Spawning worker 0 with 1 pkgs
+Spawning worker 1 with 1 pkgs
+Spawning worker 2 with 1 pkgs
+Spawning worker 3 with 1 pkgs
+Workers Finished
+Saving Primary metadata
+Saving file lists metadata
+Saving other metadata
+Generating sqlite DBs
+Sqlite DBs complete
+
+[root@kibana elk]# vim /etc/yum.repos.d/local.repo
+[elk]
+name=elk - Base
+baseurl="ftp://192.168.1.254/elk"
+enabled=1
+gpgcheck=0
+
+[root@kibana elk]# yum repolist 
+已加载插件：fastestmirror
+Determining fastest mirrors
+elk                                                                                          | 2.9 kB  00:00:00     
+local_repo                                                                                   | 3.6 kB  00:00:00     
+(1/3): elk/primary_db                                                                        |  12 kB  00:00:00     
+(2/3): local_repo/group_gz                                                                   | 166 kB  00:00:00     
+(3/3): local_repo/primary_db                                                                 | 5.9 MB  00:00:00     
+源标识                                               源名称                                                    状态
+elk                                                  elk - Base                                                    4
+local_repo                                           CentOS-7 - Base                                           9,911
+repolist: 9,915
+
+
+free -m 查看内存
+
+修改虚拟机内存文件:[root@room9pc01 qemu]# virsh edit logstash       //用edit编辑,不用vim
+
+[root@room9pc01 qemu]# virsh define /etc/libvirt/qemu/logstash.xml          //放在这里用做回忆,记住define定义
+定义域 logstash（从 /etc/libvirt/qemu/logstash.xml）
+
+启动程序:[root@logstash bin]# /opt/logstash/bin/logstash  -f /etc/logstash/logstash.conf 
+Settings: Default pipeline workers: 2
+Pipeline main started
+
+
+设置别名: alias logstash='/opt/logstash/bin/logstash'
+
+
+https://www.elastic.co/guide/en/logstash/current/index.html
+
+=====================================================================================================
+
+
+查看logstash运行的插件:
+[root@logstash ~]# cd /opt/logstash/bin
+[root@logstash logstash]# ./plugin list
+The use of bin/plugin is deprecated and will be removed in a feature release. Please use bin/logstash-plugin.
+Ignoring ffi-1.9.13 because its extensions are not built.  Try: gem pristine ffi --version 1.9.13
+logstash-codec-collectd
+logstash-codec-dots
+logstash-codec-edn
+
+
+
+logstash的运行脚本:
+[root@logstash bin]# cat /etc/logstash/logstash.conf
+input {
+  stdin{ codec => "json" }
+}
+
+filter {
+}
+
+output {
+  stdout{ codec => "rubydebug" }
+}
+
+
+
+
+[root@logstash bin]# cat /etc/logstash/logstash.conf
+input {
+  file {
+    path => ["/tmp/a.log"]
+    start_position => "beginning"                 //定义默认的开始或结束
+    sincedb_path => "/var/lib/logstash/since.db"  //自动创作上次读到哪儿的记录文件,相当于存档
+    type => "apache_log"                          //定义成什么样的日志文件
+  }
+}
+
+filter {
+}
+yum makecache
+output {
+  stdout{ codec => "rubydebug" }
+}
+
+
+[12]?\d?          //枚举1或者2,?出现0次或者1次,\d是0-9的数相当于[0-9]
+
+
+=====================================================================================================
+起动httpd服务后:
+可以在/etc/httpd/conf/httpd.conf 中查看日志文件
+
+可以在/etc/httpd/logs/access_log 里查看访问日志
+
+grep -Pv "\s*(#|s)" filebeat.yml
+
+======================================================================================================
+
+fsedits 补丁    fsimage 日志
+
+
+同步:
+[root@nn01 hadoop]# for i in node{1..3};do
+> rsync -aXSH --delete /usr/local/hadoop/ ${i}:/usr/local/ &     // & 这个符号表示放到后台
+> done
+
+检查: 1. /etc/hosts
+    2. jps 是否安装
+     3. 配置文件 hadoop-env.sh
+                  slaves
+                  core-site.xml
+              hadfs-site,xml
+    4.检查是否同步了
+
+
+========================================================================================================
+
+<property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://nn01:9000</value>
+    </property>
+
+
+ rsync -av /etc/hosts node1:/etc/
+
+rsync -aXSH /usr/local/hadoop newnode:/usr/locla/
+/etc/init.d/vncserver restart
+启动新节点和停掉新节点:
+[root@newnode hadoop]# ./sbin/yarn-daemon.sh start nodemanager
+starting nodemanager, logging to /usr/local/hadoop/logs/yarn-root-nodemanager-newnode.out
+[root@newnode hadoop]# ./sbin/yarn-daemon.sh stop nodemanager
+stopping nodemanager
+\./bin/hdfs dfsadmin -refreshNodes
+
+删除节点的时候一定要记得更新数据
+而且要在hdfs-site.xml里添加exclude,额外增加exclude配置文件,写入要删除的节点主机名,然后再更新
+
+排错看日志  /usr/local/hadoop/logs
+
+
+停服务的时候.先停nfs服务
+
+======================================================================================================
+
+Zookeeper  应用场景指挥,协调服务
+
+[student@room9pc01 ~]$ virsh dominfo node1
+Id:             6
+名称：       node1
+UUID:           ecff9c0b-416f-47a3-acc2-c8c3fc409826
+OS 类型：    hvm
+状态：       running
+CPU：          2
+CPU 时间：   1320.2s
+最大内存： 1488896 KiB
+使用的内存： 1488284 KiB
+持久：       是
+自动启动： 禁用
+管理的保存： 否
+安全性模式： none
+安全性 DOI： 0
+
+
+要学会查看官方手册: ZooKeeper.apache.org
+
+
+服务放在后台,要加-daemon
+
+ps -C 进程名   //查看进程
+
+
+======================================================================================================
+
+
+  设置路由转发：
+
+在路由主机
+
+a.     打开/etc/sysctl.conf 
+vi /etc/sysctl.conf 
+b. 在/etc/sysctl.conf中增加一行 
+net.ipv4.ip_forward = 1 
+c. 执行sysctl -p使上面b步骤生效
+
+===================================================================================
+createrepo --update .   //更新自建yum源包的索引
+
+
+
+
+===================================================================================
+
+
+)确认调度器的路由转发功能(如果已经开启，可以忽略)
+[root@proxy ~]# echo 1 > /proc/sys/net/ipv4/ip_forward
+[root@proxy ~]# cat /proc/sys/net/ipv4/ip_forward
+1
+[root@proxy ~]# echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+#修改配置文件，设置永久规则
+
+
+
+=================================================================================
+在华为云上:
+
+部署ceph时,安装不了python-urllib3.noarch 0:1.10.2-7.el7时,要用这个sudo pip uninstall urllib3 执行一遍
+
+如何取消远程后的每次yes,配置/etc/ssh/ssh_config里,搜索Strict,然后将StrictHostKeyChecking no添加在
+Host *
+        GSSAPIAuthentication yes
+的下面
+
+下载chrony的服务时,查看华为的时间服务:/etc/ntp.conf
+
+在客户端上挂载:ceph
+mount -t ceph 192.168.1.16:6789:/ /usr/local/nginx/html/  -o name=admin,secret=AQCUXd5dMOreGBAABAfRMZrv00WvaBHD5NsL/Q==
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

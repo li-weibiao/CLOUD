@@ -1,0 +1,42 @@
+DOCKER在上传包的时候,一定要注意域名或者是ip的相对应,要修改配置文件
+
+eg: docker push 192.168.1.100:5000/pod-infrastructure:latest
+  114  docker push 192.168.1.100:5000/kubernetes-dashboard-amd64:v1.8.3
+  115  docker push 192.168.1.100:5000/docker.io/myos:latest
+//如果这里用的是ip,那配置文件里也要改成ip
+
+[root@registry registry]# vim /etc/sysconfig/docker
+14 ADD_REGISTRY='--add-registry 192.168.1.100:5000'
+
+26 INSECURE_REGISTRY='--insecure-registry 192.168.1.100:5000'
+
+
+minion:
+     package: flannel    //一定要先停docker的服务,再起这个服务,最后再起docker服务
+     /etc/sysconfig/flanneld
+     FLANNEL_ETCD_ENDPOINTS="http://192.168.1.10:2379"
+  
+     systemctl restart flanneld docker
+
+
+7 网络
+   master:
+     /etc/etcd/etcd.conf
+     ETCD_LISTEN_CLIENT_URLS="http://0.0.0.0:2379"    //修改后一定要重启etcd服务
+
+     etcdctl mk /atomic.io/network/config '{"Network": "10.254.0.0/16", "Backend": {"Type": "vxlan"}}'   //这个是启动程序
+
+
+
+kubectl run haha -it --image=
+
+
+访问网站验证:http://192.168.1.11:30090/
+
+XSHELL:
+从linux下载到w10:sz /etc/passwd  
+
+从W10上传到linux: 进入到要上传的目录,然后从桌面选取要上传的东西
+
+
+
